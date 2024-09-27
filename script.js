@@ -1,9 +1,25 @@
-async function start(params) {
-
+async function start() {
+    let URL = 'http://localhost:8080/games/play'
+    const resp = await fetch(URL, {
+        method: "POST"
+    })
+    if (resp.status == 200) {
+        window.alert("Game sucessfully created")
+    } else {
+        window.alert("[ERROR] Game creation error")
+    }
 }
 
-async function restart(params) {
-    
+async function restart() {
+    let URL = 'http://localhost:8080/games/restart'
+    const resp = await fetch(URL, {
+        method: "PUT"
+    })
+    if (resp.status == 200) {
+        window.alert("Game sucessfully restarted")
+    } else {
+        window.alert("[ERROR] Game failed to restart")
+    }
 }
 
 async function makeMove(params) {
@@ -21,8 +37,6 @@ async function isRunning() {
         console.log(obj[0].isRunning)
         return obj[0].isRunning
     } else {
-
-        console.log("ERROR Function isRunning")
-        window.alert("ERROR function isRunning")
+        window.alert("[ERROR] function isRunning")
     }
 }
