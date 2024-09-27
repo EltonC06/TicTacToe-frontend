@@ -22,8 +22,16 @@ async function restart() {
     }
 }
 
-async function makeMove(params) {
-    
+async function makeMove(num) {
+    let URL = `http://localhost:8080/games/play/${num}`
+    const resp = await fetch(URL, {
+        method: 'PUT'
+    })
+    if (resp.status == 200) {
+        window.alert("You made a move")
+    } else {
+        window.alert("[ERROR] Something went wrong while making a move")
+    }
 }
 
 async function isRunning() {
