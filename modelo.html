@@ -12,8 +12,8 @@
     <header>
         <h1>TicTacToe</h1>
     </header>
-    <section>
-        <div>
+    <section class="game-container">
+        <div class="game-board">
             <table>
                 <tbody>
                     <td id="place1" onclick="makeMove(1)">1</td>
@@ -32,7 +32,12 @@
                 </tbody>
             </table>
         </div>
-        <div>
+        
+        <div class="game-info">
+            <h2>Status do jogo</h2>
+
+            <div id="gameStatus">O jogo vai começar!</div>
+            
             <input type="button" value="Start" onclick="start()">
             <input type="button" value="Restart" onclick="restart()">
         </div>
