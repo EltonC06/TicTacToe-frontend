@@ -65,7 +65,8 @@ async function updateGame() {
     let place7 = window.document.getElementById('place7')
     let place8 = window.document.getElementById('place8')
     let place9 = window.document.getElementById('place9')
-
+    let gameStatus = window.document.getElementById('gameStatus')
+    
     let URL = 'http://localhost:8080/games'
     const resp = await fetch(URL, {
         method: 'GET'
@@ -82,6 +83,17 @@ async function updateGame() {
         place7.innerHTML=String(game.thirdLine).charAt(0)
         place8.innerHTML=String(game.thirdLine).charAt(1)
         place9.innerHTML=String(game.thirdLine).charAt(2)
+        if (game.isRunning) {
+            gameStatus.innerHTML="<p>The game started!</p>"
+        } else if (game.roundWinner == "X") {
+            gameStatus.innerHTML="<p>[X] won the roun</p>"
+        } else if (game.roundWinner == "O") {
+            gameStatus.innerHTML="<p>[O] won the round</p>"
+        } else if (game.roundWinner == "D") {
+            gameStatus.innerHTML="<p>Draw</p>"
+        }
+    
+
     } else {
         window.alert("Something went wrong while updating game data")
     }
