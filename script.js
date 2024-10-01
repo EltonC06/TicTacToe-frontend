@@ -1,4 +1,5 @@
 updateGame()
+var roundcount = []
 
 async function start() {
     let URL = 'http://localhost:8080/games/play'
@@ -32,7 +33,8 @@ async function makeMove(num) {
         method: 'PUT'
     })
     if (resp.status == 200) {
-        updateGame()
+        await updateGame()
+        
     } else {
         window.alert("[ERROR] Something went wrong while making a move")
     }
@@ -66,6 +68,10 @@ async function updateGame() {
     let place8 = window.document.getElementById('place8')
     let place9 = window.document.getElementById('place9')
     let gameStatus = window.document.getElementById('gameStatus')
+    let xcount = window.document.getElementById('xcount')
+    let ocount = window.document.getElementById('ocount')
+    let drawcount = window.document.getElementById('drawcount')
+    let roundnumber = window.document.getElementById('roundnumber')
     
     let URL = 'http://localhost:8080/games'
     const resp = await fetch(URL, {
@@ -83,17 +89,24 @@ async function updateGame() {
         place7.innerHTML=String(game.thirdLine).charAt(0)
         place8.innerHTML=String(game.thirdLine).charAt(1)
         place9.innerHTML=String(game.thirdLine).charAt(2)
+        
         if (game.isRunning) {
             gameStatus.innerHTML="<p>The game started!</p>"
         } else if (game.roundWinner == "X") {
             gameStatus.innerHTML="<p>[X] won the round</p>"
+            roundcount.push("X")
         } else if (game.roundWinner == "O") {
             gameStatus.innerHTML="<p>[O] won the round</p>"
+            roundcount.push("O")
         } else if (game.roundWinner == "D") {
             gameStatus.innerHTML="<p>Draw</p>"
+            roundcount.push("D")
         }
+        roundnumber.innerHTML="Rounds played: " + roundcount.length
+        xcount.innerHTML="[X]: " + roundcount.filter(item => item === 'X').length
+        ocount.innerHTML="[O]: " + roundcount.filter(item => item === 'O').length
+        drawcount.innerHTML="[Draw]: " + roundcount.filter(item => item === 'D').length
     
-
     } else {
         window.alert("Something went wrong while updating game data")
     }
