@@ -86,7 +86,7 @@ async function updateGame() {
         if (game.isRunning) {
             gameStatus.innerHTML="<p>The game started!</p>"
         } else if (game.roundWinner == "X") {
-            gameStatus.innerHTML="<p>[X] won the roun</p>"
+            gameStatus.innerHTML="<p>[X] won the round</p>"
         } else if (game.roundWinner == "O") {
             gameStatus.innerHTML="<p>[O] won the round</p>"
         } else if (game.roundWinner == "D") {
