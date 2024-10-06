@@ -1,8 +1,8 @@
 updateGame()
 var roundcount = []
 
-async function start() {
-    let URL = 'http://localhost:8080/games/play'
+async function startMatch() {
+    let URL = 'http://localhost:8080/match/create'
     const resp = await fetch(URL, {
         method: "POST"
     })
@@ -14,8 +14,8 @@ async function start() {
     }
 }
 
-async function restart() {
-    let URL = 'http://localhost:8080/games/restart'
+async function restartMatch() {
+    let URL = 'http://localhost:8080/match/reset'
     const resp = await fetch(URL, {
         method: "PUT"
     })
@@ -41,7 +41,7 @@ async function makeMove(num) {
 }
 
 async function isRunning() {
-    let URL = 'http://localhost:8080/games'
+    let URL = 'http://localhost:8080/games/1'
     
     const resp = await fetch(URL, {
         method: 'GET'
@@ -73,13 +73,13 @@ async function updateGame() {
     let drawcount = window.document.getElementById('drawcount')
     let roundnumber = window.document.getElementById('roundnumber')
     
-    let URL = 'http://localhost:8080/games'
+    let URL = 'http://localhost:8080/games/1'
     const resp = await fetch(URL, {
         method: 'GET'
     })
     if (resp.status == 200) {
         const obj = await resp.json();
-        const game = obj[0]
+        const game = obj
         place1.innerHTML=String(game.firstLine).charAt(0)
         place2.innerHTML=String(game.firstLine).charAt(1)
         place3.innerHTML=String(game.firstLine).charAt(2)
