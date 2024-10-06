@@ -9,7 +9,7 @@ async function startMatch() {
         console.log("Game sucessfully created")
         updateGame()
     } else {
-        window.alert("[ERROR] Game creation error")
+        window.alert("[ERROR] Match creation error")
     }
 }
 
@@ -19,10 +19,23 @@ async function restartMatch() {
         method: "PUT"
     })
     if (resp.status == 200) {
-        console.log("Game sucessfully restarted")
+        console.log("Match sucessfully restarted")
         updateGame()
     } else {
-        window.alert("[ERROR] Game failed to restart")
+        window.alert("[ERROR] Match failed to restart")
+    }
+}
+
+async function restartRound() {
+    let URL = 'http://localhost:8080/games/restart'
+    const resp = await fetch(URL, {
+        method: "PUT"
+    })
+    if (resp.status == 200) {
+        console.log("Round sucessfully restarted")
+        updateGame()
+    } else {
+        window.alert("[ERROR] Round failed to restart")
     }
 }
 
@@ -94,10 +107,10 @@ async function updateGame() {
             gameStatus.innerHTML="<p>The game started!</p>"
         }
         
-        roundnumber.innerHTML="Rounds played: " + match.draws
+        roundnumber.innerHTML="Rounds played: " + match.roundsPlayed
         xcount.innerHTML="[X]: " + match.xVictories
         ocount.innerHTML="[O]: " + match.oVictories
-        drawcount.innerHTML="[Draw]: " + match.roundsPlayed
+        drawcount.innerHTML="[Draw]: " + match.draws
     
     } else {
         window.alert("Something went wrong while updating game data")
