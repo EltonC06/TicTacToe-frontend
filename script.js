@@ -1,5 +1,4 @@
 updateGame()
-var roundcount = []
 
 async function startMatch() {
     let URL = 'http://localhost:8080/match/create'
@@ -73,13 +72,14 @@ async function updateGame() {
     let drawcount = window.document.getElementById('drawcount')
     let roundnumber = window.document.getElementById('roundnumber')
     
-    let URL = 'http://localhost:8080/games/1'
+    let URL = 'http://localhost:8080/match/1'
     const resp = await fetch(URL, {
         method: 'GET'
     })
     if (resp.status == 200) {
-        const obj = await resp.json();
-        const game = obj
+        const match = await resp.json();
+        const game = match.ticTacToe
+        
         place1.innerHTML=String(game.firstLine).charAt(0)
         place2.innerHTML=String(game.firstLine).charAt(1)
         place3.innerHTML=String(game.firstLine).charAt(2)
@@ -92,20 +92,12 @@ async function updateGame() {
         
         if (game.isRunning) {
             gameStatus.innerHTML="<p>The game started!</p>"
-        } else if (game.roundWinner == "X") {
-            gameStatus.innerHTML="<p>[X] won the round</p>"
-            roundcount.push("X")
-        } else if (game.roundWinner == "O") {
-            gameStatus.innerHTML="<p>[O] won the round</p>"
-            roundcount.push("O")
-        } else if (game.roundWinner == "D") {
-            gameStatus.innerHTML="<p>Draw</p>"
-            roundcount.push("D")
         }
-        roundnumber.innerHTML="Rounds played: " + roundcount.length
-        xcount.innerHTML="[X]: " + roundcount.filter(item => item === 'X').length
-        ocount.innerHTML="[O]: " + roundcount.filter(item => item === 'O').length
-        drawcount.innerHTML="[Draw]: " + roundcount.filter(item => item === 'D').length
+        
+        roundnumber.innerHTML="Rounds played: " + match.draws
+        xcount.innerHTML="[X]: " + match.xVictories
+        ocount.innerHTML="[O]: " + match.oVictories
+        drawcount.innerHTML="[Draw]: " + match.roundsPlayed
     
     } else {
         window.alert("Something went wrong while updating game data")
