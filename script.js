@@ -129,6 +129,12 @@ async function updateGame() {
         
         if (game.isRunning) {
             gameStatus.innerHTML="<p>The game started!</p>"
+        } else if (game.roundWinner != null) {
+            if (game.roundWinner == "D") {
+                gameStatus.innerHTML="<p>The game ended in a draw!</p>"
+            } else {
+                gameStatus.innerHTML=`<p>Game finished, ${game.roundWinner} won the round!</p>`
+            }
         }
         
         roundnumber.innerHTML="Rounds played: " + match.roundsPlayed
