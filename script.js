@@ -1,148 +1,191 @@
 verifyGameStatus()
 
 async function verifyGameStatus() {
-    let URL = 'http://localhost:8080/match/1'
-    const resp = await fetch(URL, {
-        method: "GET"
-    })
-    if (resp.status == 200) {
-        updateGame()
-    } else if (resp.status == 404) {
-        console.log("Game not created yet")
+    const url = 'http://localhost:8080/match/1'
+    try {
+        const response = await fetch(url, {
+            method: "GET"
+        })
+        if (response.ok) {
+            updateGame()
+        } else if (response.status == 404) {
+            console.log("Game not created yet")
+        } else {
+            console.log(`Unexpected error: ${response.status}`)
+        }
+    } catch (error)  {
+        console.error(`Network error while verifying game status: ${error}`)
     }
+
 }
 
 async function startOrRestartMatch() {
-    let URL = 'http://localhost:8080/match/1'
-    const resp = await fetch(URL, {
-        method: "GET"
-    })
-    if (resp.status == 200) {
-        restartMatch()
-    } else {
-        startMatch()
+    const url = 'http://localhost:8080/match/1'
+    try {
+        const response = await fetch(url, {
+            method: "GET"
+        })
+        if (response.ok) {
+            restartMatch()
+        } else {
+            startMatch()
+        }
+    } catch (error) {
+        console.error(`Error while starting or restarting match: ${error}`)
     }
+
 }
 
 async function startMatch() {
-    let URL = 'http://localhost:8080/match/create'
-    const resp = await fetch(URL, {
-        method: "POST"
-    })
-    if (resp.status == 200) {
-        console.log("Game sucessfully created")
-        updateGame()
-    } else {
-        window.alert("[ERROR] Match creation error")
+    const url = 'http://localhost:8080/match/create'
+    try {
+        const response = await fetch(url, {
+            method: "POST"
+        })
+        if (response.ok) {
+            console.log("Game sucessfully created.")
+            updateGame()
+        } else {
+            window.alert("[ERROR] Match creation error")
+        }
+    } catch (error) {
+        console.error(`Error creating match: ${error}`)
+        window.alert("[ERROR] Network error while creating match.")
     }
 }
 
 async function restartMatch() {
-    let URL = 'http://localhost:8080/match/reset'
-    const resp = await fetch(URL, {
-        method: "PUT"
-    })
-    if (resp.status == 200) {
-        console.log("Match sucessfully restarted")
-        updateGame()
-    } else {
-        window.alert("[ERROR] Match failed to restart")
+    const url = 'http://localhost:8080/match/reset'
+    try {
+        const response = await fetch(url, {
+            method: "PUT"
+        })
+        if (response.ok) {
+            console.log("Match sucessfully restarted")
+            updateGame()
+        } else {
+            window.alert("[ERROR] Match failed to restart")
+        }
+    } catch (error) {
+        console.error(`Error restarting match: ${error}`)
+        window.alert("[ERROR] Network error while restarting match.")
     }
 }
 
 async function restartRound() {
-    let URL = 'http://localhost:8080/games/restart'
-    const resp = await fetch(URL, {
-        method: "PUT"
-    })
-    if (resp.status == 200) {
-        console.log("Round sucessfully restarted")
-        updateGame()
-    } else {
-        window.alert("[ERROR] Round failed to restart")
+    const url = 'http://localhost:8080/games/restart'
+    try {
+        const response = await fetch(url, {
+            method: "PUT"
+        })
+        if (response.status == 200) {
+            console.log("Round sucessfully restarted")
+            updateGame()
+        } else {
+            window.alert("[ERROR] Round failed to restart")
+        }
+    } catch (error) {
+        console.error(`Error restarting round: ${error}`)
+        window.alert("[ERROR] Network error while restarting round.")
     }
 }
 
 async function makeMove(num) {
-    let URL = `http://localhost:8080/games/play/${num}`
-    const resp = await fetch(URL, {
-        method: 'PUT'
-    })
-    if (resp.status == 200) {
-        await updateGame()
-        
-    } else {
-        window.alert("[ERROR] Something went wrong while making a move")
+    const url = `http://localhost:8080/games/play/${num}`
+    try {
+        const response = await fetch(url, {
+            method: 'PUT'
+        })
+        if (response.ok) {
+            await updateGame() 
+        } else {
+            window.alert("[ERROR] Something went wrong while making a move")
+            console.log(`Error making move: ${response.status} ${response.statusText}`)
+        }
+    } catch(error) {
+        console.error(`Error making move: ${error}`)
+        window.alert("[ERROR] Network error while making a move.")
     }
+
 }
 
 async function isRunning() {
-    let URL = 'http://localhost:8080/games/1'
-    
-    const resp = await fetch(URL, {
-        method: 'GET'
-    })
-    
-    if (resp.status == 200) {
-        const obj = await resp.json();
-        console.log(obj)
-        console.log(obj[0].isRunning)
-        return obj[0].isRunning
-    } else {
-        window.alert("[ERROR] function isRunning")
+    const url = 'http://localhost:8080/games/1'
+    try {
+        const response = await fetch(url, {
+            method: 'GET'
+        })
+        if (response.ok) {
+            const obj = await response.json();
+            return obj?.isRunning || false 
+        } else {
+            window.alert("[ERROR] Failed to verify game running status")
+            console.error(`Error verifying game running status: ${response.status} ${response.statusText}`)
+            return false
+        }
+    } catch(error) {
+        console.error(`Error verifying game running status: ${error}`)
+        window.alert("[ERROR] Network error while verifying game running status.")
+        return false
     }
 }
 
 async function updateGame() {
-    let place1 = window.document.getElementById('place1')
-    let place2 = window.document.getElementById('place2')
-    let place3 = window.document.getElementById('place3')
-    let place4 = window.document.getElementById('place4')
-    let place5 = window.document.getElementById('place5')
-    let place6 = window.document.getElementById('place6')
-    let place7 = window.document.getElementById('place7')
-    let place8 = window.document.getElementById('place8')
-    let place9 = window.document.getElementById('place9')
-    let gameStatus = window.document.getElementById('gameStatus')
-    let xcount = window.document.getElementById('xcount')
-    let ocount = window.document.getElementById('ocount')
-    let drawcount = window.document.getElementById('drawcount')
-    let roundnumber = window.document.getElementById('roundnumber')
+    const places = [
+        window.document.getElementById('place1'),
+        window.document.getElementById('place2'),
+        window.document.getElementById('place3'),
+        window.document.getElementById('place4'),
+        window.document.getElementById('place5'),
+        window.document.getElementById('place6'),
+        window.document.getElementById('place7'),
+        window.document.getElementById('place8'),
+        window.document.getElementById('place9')
+    ]
     
-    let URL = 'http://localhost:8080/match/1'
-    const resp = await fetch(URL, {
-        method: 'GET'
-    })
-    if (resp.status == 200) {
-        const match = await resp.json();
-        const game = match.ticTacToe
-        
-        place1.innerHTML=String(game.firstLine).charAt(0)
-        place2.innerHTML=String(game.firstLine).charAt(1)
-        place3.innerHTML=String(game.firstLine).charAt(2)
-        place4.innerHTML=String(game.secondLine).charAt(0)
-        place5.innerHTML=String(game.secondLine).charAt(1)
-        place6.innerHTML=String(game.secondLine).charAt(2)
-        place7.innerHTML=String(game.thirdLine).charAt(0)
-        place8.innerHTML=String(game.thirdLine).charAt(1)
-        place9.innerHTML=String(game.thirdLine).charAt(2)
-        
-        if (game.isRunning) {
-            gameStatus.innerHTML="<p>The game started!</p>"
-        } else if (game.roundWinner != null) {
-            if (game.roundWinner == "D") {
-                gameStatus.innerHTML="<p>The game ended in a draw!</p>"
-            } else {
-                gameStatus.innerHTML=`<p>Game finished, ${game.roundWinner} won the round!</p>`
+    const gameStatus = window.document.getElementById('gameStatus')
+    const xcount = window.document.getElementById('xcount')
+    const ocount = window.document.getElementById('ocount')
+    const drawcount = window.document.getElementById('drawcount')
+    const roundnumber = window.document.getElementById('roundnumber')
+    
+    const url = 'http://localhost:8080/match/1'
+    
+    try {
+        const response = await fetch(url, {
+            method: 'GET'
+        })
+        if (response.ok) {
+            const match = await response.json();
+            const { ticTacToe: game, roundsPlayed, xVictories, oVictories, draws } = match;
+            
+            // atualizar lugares do jogo
+            places.forEach((place, index) => {
+                place.innerHTML = String(game.firstLine + game.secondLine + game.thirdLine).charAt(index);
+            });
+            
+            // atualiza o status do jogo
+            if (game.isRunning) {
+                gameStatus.innerHTML="<p>The game started!</p>"
+            } else if (game.roundWinner != null) {
+                if (game.roundWinner == "D") {
+                    gameStatus.innerHTML="<p>The game ended in a draw!</p>"
+                } else {
+                    gameStatus.innerHTML=`<p>Game finished, ${game.roundWinner} won the round!</p>`
+                }
             }
+            
+            // atualiza contadores
+            roundnumber.innerHTML="Rounds played: " + match.roundsPlayed
+            xcount.innerHTML="[X]: " + match.xVictories
+            ocount.innerHTML="[O]: " + match.oVictories
+            drawcount.innerHTML="[Draw]: " + match.draws 
+        } else {
+            window.alert("Something went wrong while updating game data")
+            console.error(`Error fetching game data: ${response.status} ${response.statusText}`)
         }
-        
-        roundnumber.innerHTML="Rounds played: " + match.roundsPlayed
-        xcount.innerHTML="[X]: " + match.xVictories
-        ocount.innerHTML="[O]: " + match.oVictories
-        drawcount.innerHTML="[Draw]: " + match.draws
-    
-    } else {
-        window.alert("Something went wrong while updating game data")
+    } catch (error) {
+        console.error(`Network error while updating game data: ${error}`) 
+        window.alert("[ERROR] network error while updating game data.")
     }
 }
