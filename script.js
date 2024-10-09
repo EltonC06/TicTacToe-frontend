@@ -1,4 +1,16 @@
-updateGame()
+verifyGameStatus()
+
+async function verifyGameStatus() {
+    let URL = 'http://localhost:8080/match/1'
+    const resp = await fetch(URL, {
+        method: "GET"
+    })
+    if (resp.status == 200) {
+        updateGame()
+    } else if (resp.status == 404) {
+        console.log("Game not created yet")
+    }
+}
 
 async function startOrRestartMatch() {
     let URL = 'http://localhost:8080/match/1'
