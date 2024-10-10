@@ -159,12 +159,12 @@ async function updateGame() {
             const match = await response.json();
             const { ticTacToe: game, roundsPlayed, xVictories, oVictories, draws } = match;
             
-            // atualizar lugares do jogo
+            // update game places
             places.forEach((place, index) => {
                 place.innerHTML = String(game.firstLine + game.secondLine + game.thirdLine).charAt(index);
             });
             
-            // atualiza o status do jogo
+            // update game status
             if (game.isRunning) {
                 gameStatus.innerHTML="<p>The game started!</p>"
             } else if (game.roundWinner != null) {
@@ -175,7 +175,7 @@ async function updateGame() {
                 }
             }
             
-            // atualiza contadores
+            // update counters
             roundnumber.innerHTML="Rounds played: " + match.roundsPlayed
             xcount.innerHTML="[X]: " + match.xVictories
             ocount.innerHTML="[O]: " + match.oVictories
