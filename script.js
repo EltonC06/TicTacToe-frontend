@@ -32,6 +32,7 @@ async function startOrRestartMatch() {
         }
     } catch (error) {
         console.error(`Error while starting or restarting match: ${error}`)
+        window.alert("[ERROR] Network error while (re)starting match.")
     }
 
 }
