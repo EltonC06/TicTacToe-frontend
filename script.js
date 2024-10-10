@@ -161,8 +161,15 @@ async function updateGame() {
             const { ticTacToe: game, roundsPlayed, xVictories, oVictories, draws } = match;
             
             // update game places
+            table = String(game.firstLine + game.secondLine + game.thirdLine)
             places.forEach((place, index) => {
-                place.innerHTML = String(game.firstLine + game.secondLine + game.thirdLine).charAt(index);
+                if (table.charAt(index) === 'X' ) {
+                    place.innerHTML = table.charAt(index)
+                } else if (table.charAt(index) === 'O') {
+                    place.innerHTML = table.charAt(index)
+                } else {
+                    place.innerHTML = ''
+                }
             });
             
             // update game status

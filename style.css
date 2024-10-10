@@ -45,8 +45,15 @@ tfoot {
 
 th,
 td {
+  overflow: hidden;
+  vertical-align: middle;
   border: 1px solid rgb(160 160 160);
-  padding: 8px 10px;
+  padding: 0;
+  width: 50px;
+  height: 50px;
+  text-align: center;
+  font-size: 24px;
+  cursor: pointer;
 }
 
 td:last-of-type {
@@ -135,4 +142,12 @@ input[type="button"] {
 #roundCount p {
   display: inline;
   margin-right: 15px;
+}
+
+#gameStatus {
+  height: 40px;
+  overflow: hidden;
+  display: flex;
+  justify-content: left;
+  align-items: center;
 }
