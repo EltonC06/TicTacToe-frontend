@@ -1,7 +1,8 @@
 verifyGameStatus()
+var match_id = null
 
 async function verifyGameStatus() {
-    const url = 'http://localhost:8080/match/1'
+    const url = `http://localhost:8080/match/${match_id}`
     try {
         const response = await fetch(url, {
             method: "GET"
@@ -19,30 +20,17 @@ async function verifyGameStatus() {
 
 }
 
-async function startOrRestartMatch() {
-    const url = 'http://localhost:8080/match/1'
-    try {
-        const response = await fetch(url, {
-            method: "GET"
-        })
-        if (response.ok) {
-            restartMatch()
-        } else {
-            startMatch()
-        }
-    } catch (error) {
-        console.error(`Error while starting or restarting match: ${error}`)
-        window.alert("[ERROR] Network error while (re)starting match.")
-    }
-
-}
-
-async function startMatch() {
+async function createMatch() {
     const url = 'http://localhost:8080/match/create'
     try {
         const response = await fetch(url, {
             method: "POST"
         })
+        if (response.ok) {
+            const obj = await response.json();
+            match_id = obj.id
+            console.log(match_id)
+        }
         if (response.ok) {
             console.log("Game sucessfully created.")
             updateGame()
@@ -56,7 +44,7 @@ async function startMatch() {
 }
 
 async function restartMatch() {
-    const url = 'http://localhost:8080/match/reset'
+    const url = `http://localhost:8080/match/reset/${match_id}`
     try {
         const response = await fetch(url, {
             method: "PUT"
@@ -74,7 +62,7 @@ async function restartMatch() {
 }
 
 async function restartRound() {
-    const url = 'http://localhost:8080/games/restart'
+    const url = `http://localhost:8080/games/restart/${match_id}`
     try {
         const response = await fetch(url, {
             method: "PUT"
@@ -92,7 +80,7 @@ async function restartRound() {
 }
 
 async function makeMove(num) {
-    const url = `http://localhost:8080/games/play/${num}`
+    const url = `http://localhost:8080/games/play/${match_id}/${num}`
     try {
         const response = await fetch(url, {
             method: 'PUT'
@@ -111,7 +99,7 @@ async function makeMove(num) {
 }
 
 async function isRunning() {
-    const url = 'http://localhost:8080/games/1'
+    const url = `http://localhost:8080/games/${match_id}`
     try {
         const response = await fetch(url, {
             method: 'GET'
@@ -150,7 +138,7 @@ async function updateGame() {
     const drawcount = window.document.getElementById('drawcount')
     const roundnumber = window.document.getElementById('roundnumber')
     
-    const url = 'http://localhost:8080/match/1'
+    const url = `http://localhost:8080/match/${match_id}`
     
     try {
         const response = await fetch(url, {
