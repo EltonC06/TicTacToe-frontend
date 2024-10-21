@@ -1,5 +1,4 @@
-verifyGameStatus()
-var match_id = null
+var match_id = 0
 
 async function verifyGameStatus() {
     const url = `http://localhost:8080/match/${match_id}`
