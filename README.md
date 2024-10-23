@@ -57,6 +57,8 @@ This is the front-end of the Tic-Tac-Toe game, developed to work seamlessly with
 
 - **Important:** It is recommended to use the port 8080 to host the back-end application.
 
+- **If you are not using port 8080**, please make sure to update the API endpoints in the front-end code to match the port your back-end is running on.
+
 ## Author
 
 Elton da Costa Oliveira
