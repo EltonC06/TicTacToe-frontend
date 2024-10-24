@@ -1,7 +1,8 @@
 var match_id = 0
+const baseURL = 'https://tictactoespring.onrender.com'
 
 async function verifyGameStatus() {
-    const url = `http://localhost:8080/match/${match_id}`
+    const url = `${baseURL}/match/${match_id}`
     try {
         const response = await fetch(url, {
             method: "GET"
@@ -20,7 +21,7 @@ async function verifyGameStatus() {
 }
 
 async function createMatch() {
-    const url = 'http://localhost:8080/match/create'
+    const url = `${baseURL}/match/create`
     try {
         const response = await fetch(url, {
             method: "POST"
@@ -28,7 +29,6 @@ async function createMatch() {
         if (response.ok) {
             const obj = await response.json();
             match_id = obj.id
-            console.log(match_id)
         }
         if (response.ok) {
             console.log("Game sucessfully created.")
@@ -43,7 +43,7 @@ async function createMatch() {
 }
 
 async function restartMatch() {
-    const url = `http://localhost:8080/match/reset/${match_id}`
+    const url = `${baseURL}/match/reset/${match_id}`
     try {
         const response = await fetch(url, {
             method: "PUT"
@@ -61,7 +61,7 @@ async function restartMatch() {
 }
 
 async function restartRound() {
-    const url = `http://localhost:8080/games/restart/${match_id}`
+    const url = `${baseURL}/games/restart/${match_id}`
     try {
         const response = await fetch(url, {
             method: "PUT"
@@ -79,7 +79,7 @@ async function restartRound() {
 }
 
 async function makeMove(num) {
-    const url = `http://localhost:8080/games/play/${match_id}/${num}`
+    const url = `${baseURL}/games/play/${match_id}/${num}`
     try {
         const response = await fetch(url, {
             method: 'PUT'
@@ -98,7 +98,7 @@ async function makeMove(num) {
 }
 
 async function isRunning() {
-    const url = `http://localhost:8080/games/${match_id}`
+    const url = `${baseURL}/games/${match_id}`
     try {
         const response = await fetch(url, {
             method: 'GET'
@@ -137,7 +137,7 @@ async function updateGame() {
     const drawcount = window.document.getElementById('drawcount')
     const roundnumber = window.document.getElementById('roundnumber')
     
-    const url = `http://localhost:8080/match/${match_id}`
+    const url = `${baseURL}/match/${match_id}`
     
     try {
         const response = await fetch(url, {
