@@ -1,40 +1,17 @@
-# Tic-Tac-Toe Front End
-
-## About the Project
-
-This is the front-end of the Tic-Tac-Toe game, developed to work seamlessly with the back-end Spring Boot application. The goal is to provide a user-friendly interface for players to enjoy the classic game of Tic-Tac-Toe.
-
-## Images:
-
-<img src="images/screenshots/tic-tac-toe-game-board.png" alt="Tic-Tac-Toe Game Board" width="340" height="300">
-
-<img src="images/screenshots/tic-tac-toe-draw-screen.png" alt="Tic-Tac-Toe Draw Screen" width="340" height="300">
-
-<img src="images/screenshots/tic-tac-toe-win-screen.png" alt="Tic-Tac-Toe Win Screen" width="340" height="300">
-
-
-## Technologies Used
-
-- **Front-end**
-  - HTML
-  - CSS
-  - JavaScript
-
-- **Back-end**
-  - Java
-  - Spring Boot
-  - H2 Database
-
 ## How to Run the Project
 
 ### Prerequisites
 
+- Just a web server for front-end
+
+**or**
+
 - A running instance of the back-end application.
     - Preference to use the 8080 port to run the back-end.
     - Caution: Tested only using Spring Tool Suite.
-- A web server for front-end (you can use Live Server extension in VS Code).
+- A web server for front-end (you can use Five Server extension in VS Code).
 
-### Instructions
+### Instructions to Run Both Server on your Own Machine
 
 1. **Set Up the Back-End**
    - Follow the instructions in the [Tic-Tac-Toe Spring README](https://github.com/EltonC06/TicTacToeSpring/blob/main/README.md) to run the back-end application.
@@ -48,16 +25,14 @@ This is the front-end of the Tic-Tac-Toe game, developed to work seamlessly with
    - Open the project folder in your preferred code editor.
 
 4. **Run the Front-End**
-   - Use the Live Server extension (or any other web server) to serve the front-end files.
+   - Use the Five Server extension (or any other web server) to serve the front-end files.
 
 ### Note
-- If you want to test the application, please follow the instructions for the back-end project. Start by running the back-end server.
+- The `baseURL` variable is predefined to use the URL of the TicTacToe back-end server hosted on Render. You can leave it unchanged as it is already functional; simply run it using a tool like Five Server, and it should work simply.
+  
+- **Important:** As I am using the free plan on Render, the requests may take some time, especially initially. However, they should become a bit faster after the first few requests.
 
-- After the back-end server is running, proceed to run this front-end application so they can be integrated properly.
-
-- **Important:** It is recommended to use the port 8080 to host the back-end application.
-
-- **If you are not using port 8080**, please make sure to update the API endpoints in the front-end code to match the port your back-end is running on.
+- If you prefer to run the back-end server on your own machine, please follow the instructions provided above. Don't forget to change the `baseURL` in the `.js` file to match your setup (commonly: `localhost:8080`).
 
 ## Author
 
