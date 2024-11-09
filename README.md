@@ -2,10 +2,6 @@
 
 ### Prerequisites
 
-- Just a web server for front-end
-
-**or**
-
 - A running instance of the back-end application.
     - Preference to use the 8080 port to run the back-end.
     - Caution: Tested only using Spring Tool Suite.
@@ -28,11 +24,7 @@
    - Use the Five Server extension (or any other web server) to serve the front-end files.
 
 ### Note
-- The `baseURL` variable is predefined to use the URL of the TicTacToe back-end server hosted on Render. You can leave it unchanged as it is already functional; simply run it using a tool like Five Server, and it should work simply.
-  
-- **Important:** As I am using the free plan on Render, the requests may take some time, especially initially. However, they should become a bit faster after the first few requests.
-
-- If you prefer to run the back-end server on your own machine, please follow the instructions provided above. Don't forget to change the `baseURL` in the `.js` file to match your setup (commonly: `localhost:8080`).
+- To run the back-end server on your own machine, please follow the instructions provided above. Don't forget to change the `baseURL` in the `.js` file to match your setup (commonly: `localhost:8080`).
 
 ## Author
 
